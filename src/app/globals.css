@@ -1,26 +1,148 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm Ivory Design Tokens */
+  --bg-primary: #FBFBF9;
+  --bg-secondary: #F4F3EE;
+  --bg-tertiary: #ECEAE2;
+  --bg-card: #FFFFFF;
+  --bg-card-subtle: #F7F6F1;
+  
+  /* Graphite & Charcoal Typography Tokens */
+  --text-primary: #121316;
+  --text-secondary: #3D4048;
+  --text-muted: #6B707B;
+  --text-faint: #9EA3AF;
+
+  /* Restrained Electric-Lime Accent Tokens */
+  --accent-lime: #CEFF00;
+  --accent-lime-dark: #A5D100;
+  --accent-lime-subtle: rgba(206, 255, 0, 0.12);
+  --accent-lime-glow: rgba(206, 255, 0, 0.28);
+
+  /* Metallic & Technical Grey Tokens */
+  --metal-border: #E2E1D9;
+  --metal-border-subtle: #ECEAE3;
+  --metal-line: #D5D3C8;
+  --metal-dark: #1F2126;
+  --metal-darker: #141519;
+  --metal-card: #18191E;
+
+  /* Status Colors */
+  --status-verified: #10B981;
+  --status-warning: #F59E0B;
+  --status-alert: #EF4444;
+  --status-info: #0284C7;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Subtle Technical Grid Background */
+.tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(213, 211, 200, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(213, 211, 200, 0.35) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.tech-grid-dark {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.tech-crosshair {
+  position: relative;
+}
+
+.tech-crosshair::before {
+  content: "+";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #9EA3AF;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4C2B8;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9EA3AF;
+}
+
+/* Focus Visibility & Accessibility */
+:focus-visible {
+  outline: 2px solid #CEFF00;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Shimmer pulse for pipeline packets */
+@keyframes packet-stream {
+  0% {
+    stroke-dashoffset: 24;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-packet {
+  stroke-dasharray: 4, 8;
+  animation: packet-stream 1.5s linear infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.92);
+  }
+}
+
+.animate-live-pip {
+  animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
